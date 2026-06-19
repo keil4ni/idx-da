@@ -46,62 +46,31 @@ for year in [2024, 2025, 2026]:
         sold_shapes.append(sold_df.shape[0])
 
 
-
-# row count before concat
+# CHECK SOLD CSV ROW COUNTS, FILTER, THEN SAVE
 print('Total row count before concat:', sum(sold_shapes))
-
-# concat all sold csv's together
 sold_df = pd.concat(sold)
-
-# row count after concat
 print('Total row count after concat:', sold_df.shape)
 # sold_df.head()
 
 # filter property type by residential
 filtered_sold = sold_df[sold_df['PropertyType'] == 'Residential']
 
-# check shape and df head just to make sure
-print(filtered_sold.shape)
+# UNCOMMENT to check shape and df head just to make sure
+# print(filtered_sold.shape)
 # filtered_sold.head()
 
-# store listing dfs and their shapes in list
-# listing = []
-# listing_shapes = []
 
-# load in listing csv's
-# for year in [2024, 2025, 2026]:
-#     for month in range(1, 13):
-#         # stop loop after may 2026
-#         if year == 2026 and month > 5:
-#             break
-
-#         # note: listing csv files follow the same name scheme unlike sold csv files
-#         base_listing = f'CRMLSListing{year}{month:02d}.csv'
-
-#         # append csv if it exists, otherwise continue
-#         if os.path.exists(base_listing):
-#             df = pd.read_csv(base_listing)
-#         else:
-#             continue
-            
-#         listing.append(df)
-#         listing_shapes.append(df.shape[0])
-
-# row count before concat
+# CHECK LISTING CSV ROW COUNTS, FILTER, THEN SAVE
 print('Total row count before concat:', sum(listing_shapes))
-
-# concat all listing csv's together
 listing_df = pd.concat(listing)
-
-# row count after concat
 print('Total row count after concat:', listing_df.shape)
 # listing_df.head()
 
 # filter property type by residential
 filtered_listing = listing_df[listing_df['PropertyType'] == 'Residential']
 
-# check shape and df head just to make sure
-print(filtered_listing.shape)
+# UNCOMMENT to check shape and df head just to make sure
+# print(filtered_listing.shape)
 # filtered_listing.head()
 
 # save filtered dataframes as csv file
