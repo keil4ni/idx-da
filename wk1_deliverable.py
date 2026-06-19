@@ -46,34 +46,36 @@ for year in [2024, 2025, 2026]:
         sold_shapes.append(sold_df.shape[0])
 
 
+
 # CHECK SOLD CSV ROW COUNTS, FILTER, THEN SAVE
-print('Total row count before concat:', sum(sold_shapes))
+print('Total sold row count before concat:', sum(sold_shapes))
 sold_df = pd.concat(sold)
-print('Total row count after concat:', sold_df.shape)
+print('Total sold row count after concat (and before filtering):', sold_df.shape)
 # sold_df.head()
 
 # filter property type by residential
 filtered_sold = sold_df[sold_df['PropertyType'] == 'Residential']
 
-# UNCOMMENT to check shape and df head just to make sure
-# print(filtered_sold.shape)
+print('Total sold row count after filtering:', filtered_sold.shape)
 # filtered_sold.head()
 
 
+
 # CHECK LISTING CSV ROW COUNTS, FILTER, THEN SAVE
-print('Total row count before concat:', sum(listing_shapes))
+print('Total listing row count before concat:', sum(listing_shapes))
 listing_df = pd.concat(listing)
-print('Total row count after concat:', listing_df.shape)
+print('Total listing row count after concat (and before filtering):', listing_df.shape)
 # listing_df.head()
 
 # filter property type by residential
 filtered_listing = listing_df[listing_df['PropertyType'] == 'Residential']
 
-# UNCOMMENT to check shape and df head just to make sure
-# print(filtered_listing.shape)
+print('Total listing row count after filtering:', filtered_listing.shape)
 # filtered_listing.head()
 
-# save filtered dataframes as csv file
+
+
+# SAVE filtered dataframes as csv file
 filtered_sold.to_csv('sold.csv', index = False)
 filtered_listing.to_csv('listings.csv', index = False)
 
