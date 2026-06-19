@@ -1,0 +1,110 @@
+# import stuff
+import numpy as np
+import pandas as pd
+import os
+
+# store sold and listing dfs and their shapes in list
+sold = []
+sold_shapes = []
+
+listing = []
+listing_shapes = []
+
+# get files from each month from years 2024-2026
+for year in [2024, 2025, 2026]:
+    for month in range(1, 13):
+        # stop loop after may 2026
+        if year == 2026 and month > 5:
+            break
+
+        # GET SOLD CSV'S
+        # note: there are normal file csv's and filled file csv's
+        base_sold = f'CRMLSSold{year}{month:02d}.csv'
+        filled_sold = f'CRMLSSold{year}{month:02d}_filled.csv'
+
+        # append filled csv if it exists, otherwise append the regular file
+        if os.path.exists(filled_sold):
+            sold_df = pd.read_csv(filled_sold)
+        elif os.path.exists(base_sold):
+            sold_df = pd.read_csv(base_sold)
+        else:
+            continue
+
+        # GET LISTING CSV'S
+        # note: listing csv files follow the same name scheme unlike sold csv files
+        base_listing = f'CRMLSListing{year}{month:02d}.csv'
+        # append csv if it exists, otherwise continue
+        if os.path.exists(base_listing):
+            listing_df = pd.read_csv(base_listing)
+        else:
+            continue
+            
+        listing.append(listing_df)
+        listing_shapes.append(listing_df.shape[0])
+            
+        sold.append(sold_df)
+        sold_shapes.append(sold_df.shape[0])
+
+
+
+# row count before concat
+print('Total row count before concat:', sum(sold_shapes))
+
+# concat all sold csv's together
+sold_df = pd.concat(sold)
+
+# row count after concat
+print('Total row count after concat:', sold_df.shape)
+# sold_df.head()
+
+# filter property type by residential
+filtered_sold = sold_df[sold_df['PropertyType'] == 'Residential']
+
+# check shape and df head just to make sure
+print(filtered_sold.shape)
+# filtered_sold.head()
+
+# store listing dfs and their shapes in list
+# listing = []
+# listing_shapes = []
+
+# load in listing csv's
+# for year in [2024, 2025, 2026]:
+#     for month in range(1, 13):
+#         # stop loop after may 2026
+#         if year == 2026 and month > 5:
+#             break
+
+#         # note: listing csv files follow the same name scheme unlike sold csv files
+#         base_listing = f'CRMLSListing{year}{month:02d}.csv'
+
+#         # append csv if it exists, otherwise continue
+#         if os.path.exists(base_listing):
+#             df = pd.read_csv(base_listing)
+#         else:
+#             continue
+            
+#         listing.append(df)
+#         listing_shapes.append(df.shape[0])
+
+# row count before concat
+print('Total row count before concat:', sum(listing_shapes))
+
+# concat all listing csv's together
+listing_df = pd.concat(listing)
+
+# row count after concat
+print('Total row count after concat:', listing_df.shape)
+# listing_df.head()
+
+# filter property type by residential
+filtered_listing = listing_df[listing_df['PropertyType'] == 'Residential']
+
+# check shape and df head just to make sure
+print(filtered_listing.shape)
+# filtered_listing.head()
+
+# save filtered dataframes as csv file
+filtered_sold.to_csv('sold.csv', index = False)
+filtered_listing.to_csv('listings.csv', index = False)
+
