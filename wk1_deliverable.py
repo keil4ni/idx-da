@@ -25,6 +25,7 @@ for year in [2024, 2025, 2026]:
         # append filled csv if it exists, otherwise append the regular file
         if os.path.exists(filled_sold):
             sold_df = pd.read_csv(filled_sold)
+            sold_df = sold_df.iloc[:, :-2] # drop last 2 cols of filled file
         elif os.path.exists(base_sold):
             sold_df = pd.read_csv(base_sold)
         else:
