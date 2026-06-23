@@ -53,12 +53,14 @@ print('Total sold row count before concat:', sum(sold_shapes))
 sold_df = pd.concat(sold)
 print('Total sold row count after concat (and before filtering):', sold_df.shape)
 # sold_df.head()
+# ROW COUNT: 640526
 
 # filter property type by residential
 filtered_sold = sold_df[sold_df['PropertyType'] == 'Residential']
 
 print('Total sold row count after filtering:', filtered_sold.shape)
 # filtered_sold.head()
+# ROW COUNT: 430716
 
 
 
@@ -67,12 +69,14 @@ print('Total listing row count before concat:', sum(listing_shapes))
 listing_df = pd.concat(listing)
 print('Total listing row count after concat (and before filtering):', listing_df.shape)
 # listing_df.head()
+# ROW COUNT: 917740
 
 # filter property type by residential
 filtered_listing = listing_df[listing_df['PropertyType'] == 'Residential']
 
 print('Total listing row count after filtering:', filtered_listing.shape)
 # filtered_listing.head()
+# ROW COUNT: 583650
 
 
 
