@@ -3,11 +3,17 @@ import csv
 import requests
 from datetime import datetime
 
+# hide api stuff
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 # Define the API endpoint
-url = 'https://api-trestle.corelogic.com/trestle/odata/Property'
+url = os.getenv('API_URL')
 
 # Get token from IDX Exchange secure proxy instead of exposing CoreLogic credentials
-auth_endpoint = 'https://idxexchange.com/internal-api/trestle_token.php?key=IDXEXCHANGE2026_CHANGE_THIS'
+auth_endpoint = os.getenv('API_ENDPOINT')
 
 response = requests.get(auth_endpoint)
 response.raise_for_status()
