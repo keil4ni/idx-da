@@ -1,5 +1,4 @@
 # import stuff
-import numpy as np
 import pandas as pd
 import os
 
@@ -10,11 +9,13 @@ sold_shapes = []
 listing = []
 listing_shapes = []
 
+END_MONTH = 5
+
 # get files from each month from years 2024-2026
 for year in [2024, 2025, 2026]:
     for month in range(1, 13):
-        # stop loop after may 2026
-        if year == 2026 and month > 5:
+        # stop loop after fully completed calendar month
+        if year == 2026 and month > END_MONTH:
             break
 
         # GET SOLD CSV'S
