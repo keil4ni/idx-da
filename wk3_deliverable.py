@@ -43,10 +43,14 @@ sold_with_rates = sold.merge(mortgage_monthly, on = 'year_month', how = 'left')
 listings_with_rates = listings.merge(mortgage_monthly, on = 'year_month', how = 'left')
 
 # validate merge
-print(sold_with_rates['rate_30yr_fixed'].isnull().sum())
-print(listings_with_rates['rate_30yr_fixed'].isnull().sum())
+print('Null values in sold_with_rates:', sold_with_rates['rate_30yr_fixed'].isnull().sum())
+print('Null values in listings_with_rates:', listings_with_rates['rate_30yr_fixed'].isnull().sum())
 
 # preview
 print(sold_with_rates[
     ['CloseDate', 'year_month', 'ClosePrice', 'rate_30yr_fixed']
 ].head())
+
+# save merged datasets
+sold_with_rates.to_csv('./data/sold_with_rates.csv', index = False)
+listings_with_rates.to_csv('./data/listings_with_rates.csv', index = False)
