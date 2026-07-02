@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # load data from wk1 folder
-folder = Path('../wk1')
+folder = Path('./data')
 
 listings = pd.read_csv(folder / 'listings.csv')
 sold = pd.read_csv(folder / 'sold.csv')
@@ -58,10 +58,39 @@ print(len(sold_over90_cols))
 sold_summary = sold[['ClosePrice', 'LivingArea', 'DaysOnMarket']].describe()
 print(sold_summary)
 
-
+# visualizations for each numeric field (histograms, boxplots, and percentile summaries, and identify extreme outliers)
+for col in ['ClosePrice', 'LivingArea', 'DaysOnMarket']:
+    plt.figure(figsize=(8, 4))
+    
+    # histogram
+    plt.subplot(1, 3, 1)
+    plt.hist(sold[col].dropna())
+    plt.title(f'{col} Histogram')
+    plt.xlabel(col)
+    plt.ylabel('Frequency')
+    plt.savefig(f'./figs/wk2_sold_{col}_histogram.png')  # save as png 
+    
+    # boxplot
+    plt.subplot(1, 3, 2)
+    plt.boxplot(sold[col].dropna())
+    plt.title(f'{col} Boxplot')
+    plt.ylabel(col)
+    plt.savefig(f'./figs/wk2_sold_{col}_boxplot.png')  # save as png 
+    
+    # percentile summary
+    plt.subplot(1, 3, 3)
+    percentiles = [25, 50, 75]
+    vals = sold[col].quantile([p/100 for p in percentiles])
+    plt.bar([f'{p}%' for p in percentiles], vals)
+    plt.title(f'{col} Percentile Summary')
+    plt.ylabel(col)
+    plt.savefig(f'./figs/wk2_sold_{col}_percentile.png')  # save as png
+    
+    plt.tight_layout()
+    plt.show()
 
 # save filtered dataset as new csv
-# sold.to_csv('sold.csv', index = False)
+sold.to_csv('./data/sold.csv', index = False)
 
 
 
@@ -110,5 +139,36 @@ print(len(listing_over90_cols))
 listings_summary = listings[['ClosePrice', 'LivingArea', 'DaysOnMarket']].describe()
 print(listings_summary)
 
+# visualizations for each numeric field (histograms, boxplots, and percentile summaries, and identify extreme outliers)
+for col in ['ClosePrice', 'LivingArea', 'DaysOnMarket']:
+    plt.figure(figsize=(8, 4))
+    
+    # histogram
+    plt.subplot(1, 3, 1)
+    plt.hist(listings[col].dropna())
+    plt.title(f'{col} Histogram')
+    plt.xlabel(col)
+    plt.ylabel('Frequency')
+    plt.savefig(f'./figs/wk2_listings_{col}_histogram.png')  # save as png 
+    
+    # boxplot
+    plt.subplot(1, 3, 2)
+    plt.boxplot(listings[col].dropna())
+    plt.title(f'{col} Boxplot')
+    plt.ylabel(col)
+    plt.savefig(f'./figs/wk2_listings_{col}_boxplot.png')  # save as png
+
+    # percentile summary
+    plt.subplot(1, 3, 3)
+    percentiles = [25, 50, 75]
+    vals = listings[col].quantile([p/100 for p in percentiles])
+    plt.bar([f'{p}%' for p in percentiles], vals)
+    plt.title(f'{col} Percentile Summary')
+    plt.ylabel(col)
+    plt.savefig(f'./figs/wk2_listings_{col}_percentile.png')  # save as png
+    
+    plt.tight_layout()
+    plt.show()
+
 # save filtered dataset as new csv
-# listings.to_csv('listings.csv', index = False)
+listings.to_csv('./data/listings.csv', index = False)

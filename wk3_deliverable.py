@@ -11,7 +11,7 @@ load_dotenv()
 # fetch mortgage rate data from FRED
 url = os.getenv('FRED_URL')
 
-mortgage = pd.read_csv(FRED_URL, parse_dates = ['observation_date'])
+mortgage = pd.read_csv(url, parse_dates = ['observation_date'])
 mortgage.columns = ['date', 'rate_30yr_fixed']
 
 # resample weekly rates to monthly avgs

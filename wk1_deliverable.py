@@ -20,8 +20,8 @@ for year in [2024, 2025, 2026]:
 
         # GET SOLD CSV'S
         # note: there are normal file csv's and filled file csv's
-        base_sold = f'CRMLSSold{year}{month:02d}.csv'
-        filled_sold = f'CRMLSSold{year}{month:02d}_filled.csv'
+        base_sold = f'./data/CRMLSSold{year}{month:02d}.csv'
+        filled_sold = f'./data/CRMLSSold{year}{month:02d}_filled.csv'
 
         # append filled csv if it exists, otherwise append the regular file
         if os.path.exists(filled_sold):
@@ -34,7 +34,7 @@ for year in [2024, 2025, 2026]:
 
         # GET LISTING CSV'S
         # note: listing csv files follow the same name scheme unlike sold csv files
-        base_listing = f'CRMLSListing{year}{month:02d}.csv'
+        base_listing = f'./data/CRMLSListing{year}{month:02d}.csv'
         # append csv if it exists, otherwise continue
         if os.path.exists(base_listing):
             listing_df = pd.read_csv(base_listing)
@@ -82,6 +82,6 @@ print('Total listing row count after filtering:', filtered_listing.shape)
 
 
 # SAVE filtered dataframes as csv file
-filtered_sold.to_csv('sold.csv', index = False)
-filtered_listing.to_csv('listings.csv', index = False)
+filtered_sold.to_csv('./data/sold.csv', index = False)
+filtered_listing.to_csv('./data/listings.csv', index = False)
 
