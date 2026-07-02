@@ -60,7 +60,7 @@ print(sold_summary)
 
 # visualizations for each numeric field (histograms, boxplots, and percentile summaries, and identify extreme outliers)
 for col in ['ClosePrice', 'LivingArea', 'DaysOnMarket']:
-    plt.figure(figsize=(8, 4))
+    plt.figure(figsize=(12, 4))
     
     # histogram
     plt.subplot(1, 3, 1)
@@ -68,14 +68,12 @@ for col in ['ClosePrice', 'LivingArea', 'DaysOnMarket']:
     plt.title(f'{col} Histogram')
     plt.xlabel(col)
     plt.ylabel('Frequency')
-    plt.savefig(f'./figs/wk2_sold_{col}_histogram.png')  # save as png 
     
     # boxplot
     plt.subplot(1, 3, 2)
     plt.boxplot(sold[col].dropna())
     plt.title(f'{col} Boxplot')
-    plt.ylabel(col)
-    plt.savefig(f'./figs/wk2_sold_{col}_boxplot.png')  # save as png 
+    plt.ylabel(col) 
     
     # percentile summary
     plt.subplot(1, 3, 3)
@@ -84,7 +82,7 @@ for col in ['ClosePrice', 'LivingArea', 'DaysOnMarket']:
     plt.bar([f'{p}%' for p in percentiles], vals)
     plt.title(f'{col} Percentile Summary')
     plt.ylabel(col)
-    plt.savefig(f'./figs/wk2_sold_{col}_percentile.png')  # save as png
+    plt.savefig(f'./figs/wk2_sold_{col}_viz.png')  # save as png
     
     plt.tight_layout()
     plt.show()
@@ -141,7 +139,7 @@ print(listings_summary)
 
 # visualizations for each numeric field (histograms, boxplots, and percentile summaries, and identify extreme outliers)
 for col in ['ClosePrice', 'LivingArea', 'DaysOnMarket']:
-    plt.figure(figsize=(8, 4))
+    plt.figure(figsize=(12, 4))
     
     # histogram
     plt.subplot(1, 3, 1)
@@ -149,14 +147,12 @@ for col in ['ClosePrice', 'LivingArea', 'DaysOnMarket']:
     plt.title(f'{col} Histogram')
     plt.xlabel(col)
     plt.ylabel('Frequency')
-    plt.savefig(f'./figs/wk2_listings_{col}_histogram.png')  # save as png 
     
     # boxplot
     plt.subplot(1, 3, 2)
     plt.boxplot(listings[col].dropna())
     plt.title(f'{col} Boxplot')
     plt.ylabel(col)
-    plt.savefig(f'./figs/wk2_listings_{col}_boxplot.png')  # save as png
 
     # percentile summary
     plt.subplot(1, 3, 3)
@@ -165,7 +161,7 @@ for col in ['ClosePrice', 'LivingArea', 'DaysOnMarket']:
     plt.bar([f'{p}%' for p in percentiles], vals)
     plt.title(f'{col} Percentile Summary')
     plt.ylabel(col)
-    plt.savefig(f'./figs/wk2_listings_{col}_percentile.png')  # save as png
+    plt.savefig(f'./figs/wk2_listings_{col}_viz.png')  # save as png
     
     plt.tight_layout()
     plt.show()

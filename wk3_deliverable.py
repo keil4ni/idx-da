@@ -25,7 +25,7 @@ mortgage_monthly = (
 
 # create matching year_month key on MLS datasets
 # load in sold & listings dataset from wk2
-folder = Path('../wk2')
+folder = Path('./data')
 
 listings = pd.read_csv(folder / 'listings.csv')
 sold = pd.read_csv(folder / 'sold.csv')
