@@ -25,7 +25,7 @@ def dataset_understanding(df):
     print(f'{df} data types:', df.dtypes)
     print(f'{df} dataset head:', df.head())
 
-def missing_val_analysis(df):
+def missing_val_analysis(df, df_name):
     '''
     purpose: creates null-count summary table,
              flags columns with >50% nulls,
@@ -43,9 +43,16 @@ def missing_val_analysis(df):
 
     print((null_summary.sort_values(by = 'null pct', ascending = False).head(10)))
 
+    # save null summary table to csv based on dataset name
+    if df_name == 'sold':
+        null_summary.to_csv('./data/sold_null_summary.csv', index = True)
+    elif df_name == 'listings':
+        null_summary.to_csv('./data/listings_null_summary.csv', index = True)
+
+
     # find cols w >50% nulls
     over50 = null_summary[null_summary['null pct'] > 50]
-    print(f'{df} dataset cols w >50% nulls:', over50.shape[0])
+    print(f'{df_name} dataset cols w >50% nulls:', over50.shape[0])
 
     flag_over50 = over50.index.tolist()
     # print(flag_over50)
@@ -60,7 +67,7 @@ def missing_val_analysis(df):
             flag_over50.remove(field)
 
     # check if any flagged cols were removed
-    print(len(flag_over50))
+    print(f'{df_name} dataset flagged cols after removing core fields:', len(flag_over50))
 
 def numeric_distrib_review(df, df_name):
     '''
@@ -114,12 +121,12 @@ def numeric_distrib_review(df, df_name):
         plt.figure(figsize=(12, 4))
         
         # filter out outliers
-        q1 = sold[col].quantile(0.25)
-        q3 = sold[col].quantile(0.75)
+        q1 = df[col].quantile(0.25)
+        q3 = df[col].quantile(0.75)
         iqr = q3 - q1
         lower_bound = q1 - 1.5 * iqr
         upper_bound = q3 + 1.5 * iqr
-        filtered_col = sold[(sold[col] >= lower_bound) & (sold[col] <= upper_bound)][col]
+        filtered_col = df[(df[col] >= lower_bound) & (df[col] <= upper_bound)][col]
         
         # histogram
         plt.subplot(1, 3, 1)
@@ -152,7 +159,7 @@ def eda_pipeline(df, df_name):
     purpose: runs the three eda functions in sequence for a given dataset
     '''
     dataset_understanding(df)
-    missing_val_analysis(df)
+    missing_val_analysis(df, df_name)
     numeric_distrib_review(df, df_name)
 
     # residential vs other property type share
