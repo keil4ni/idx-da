@@ -45,6 +45,7 @@ def clean_dataset(df, df_name):
     - remove/flag invalid numeric values
     '''
 
+    print(f'Cleaning {df_name} dataset...')
     # convert date columns to datetime format
     date_cols = ['CloseDate',
                 'PurchaseContractDate',
@@ -154,15 +155,14 @@ def clean_dataset(df, df_name):
                       'BuyerAgentFirstName',    # buyeragentmlsid column exists
                       'BuyerAgentLastName',         # same as above
                       ]
-    
+
     clean_df = clean_df.drop(columns = cols_to_remove)
+    if df_name == 'sold':
+        clean_df = clean_df.drop(columns = 'MlsStatus')
+        # sold properties means all mls statuses are closed
+
     print('Shape of df after dropping columns:', clean_df.shape)
     print(clean_df.head())
-
-    # if df_name == 'sold':
-    #     clean_df.to_csv(f'./data/sold_clean.csv', index = False)
-    # if df_name == 'listings':
-    #     clean_df.to_csv(f'./data/listings_clean.csv', index = False)
 
 def consistency_checks(df, df_name):
     '''
@@ -173,15 +173,53 @@ def consistency_checks(df, df_name):
         - purchase_after_close_flag
         - negative_timeline_flag
     '''
+    print('Starting consistency checks...')
+    # validate logical order of date fields
+    invalid_rows = df[~((df['ListingContractDate'] < df['PurchaseContractDate']) & 
+                        (df['PurchaseContractDate'] < df['CloseDate']))]
+    
+    print('Shape of rows where date fields are out of order', invalid_rows.shape)
+    print(invalid_rows[['ListingContractDate', 'PurchaseContractDate', 'CloseDate']].head())
+
+    # create bool flag cols 
+    # (correct order: list date < purchase date < close date)
+
+    # listdate > closedate
+    df['listing_after_close_flag'] = df['ListingContractDate'] > df['CloseDate']
+    # purchase date after close date
+    df['purchase_after_close_flag'] = df['PurchaseContractDate'] > df['CloseDate']
+    # violates order
+    df['negative_timeline_flag'] = ~((df['ListingContractDate'] < df['PurchaseContractDate']) & 
+                                    (df['PurchaseContractDate'] < df['CloseDate']))
+
+    # check that these columns were made
+    df[['listing_after_close_flag', 'purchase_after_close_flag', 'negative_timeline_flag']].head()
 
 def geographic_checks(df, df_name):
     '''
     purpose:
     - flag records w missing coords (lat/lon is null)
     - flag lat = 0 or lon = 0 (sentinel null vals)
-    - flag lon > 0 errors (cal coords should be negative)
+    - flag lon > 0 errors (cali coords should be negative)
     - flag out-of-state/implausible coords
     '''
+
+    # lat/lon is null
+    df['missing_coords_flag'] = (df['Latitude'].isna()) | (df['Longitude'].isna())
+
+    print(df[df['missing_coords_flag'] == True].shape)
+    print(df[df['missing_coords_flag'] == True].head())
+
+    # lat = 0 or lon = 0
+    df['sentinel_coords_flag'] = (df['Latitude'] == 0) | (df['Longitude'] == 0)
+
+    print(df[df['sentinel_coords_flag'] == True].shape)
+    print(df[df['sentinel_coords_flag'] == True].head())
+
+    # lon > 0
+    df['pos_lon_flag'] = df['Longitude'] > 0
+    # output should be 0 since i already filtered out non-cali coordinates in cleaning
+
 
 def cleaning_pipeline(df, df_name):
     load_dataset(df)
@@ -189,4 +227,9 @@ def cleaning_pipeline(df, df_name):
     consistency_checks(df, df_name)
     geographic_checks(df, df_name)
 
-clean_dataset(sold, 'sold')
+    # if df_name == 'sold':
+    #     clean_df.to_csv(f'./data/sold_clean.csv', index = False)
+    # if df_name == 'listings':
+    #     clean_df.to_csv(f'./data/listings_clean.csv', index = False)
+
+# clean_dataset(sold, 'sold')
