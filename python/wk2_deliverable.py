@@ -14,16 +14,16 @@ sold = pd.read_csv(folder / 'sold.csv', low_memory = False)
 raw_listings = pd.read_csv(folder / 'unfiltered_listings.csv', low_memory = False)
 raw_sold = pd.read_csv(folder / 'unfiltered_sold.csv', low_memory = False)
 
-def dataset_understanding(df):
+def dataset_understanding(df, df_name):
     '''
     purpose: checks columns, data types, shape, head;
              checks property categories,
              validates completeness
     '''
-    print(f'{df} dataset shape:', df.shape)
-    print(f'{df} dataset columns:', df.columns)
-    print(f'{df} data types:', df.dtypes)
-    print(f'{df} dataset head:', df.head())
+    print(f'{df_name} dataset shape:', df.shape)
+    print(f'{df_name} dataset columns:', df.columns)
+    print(f'{df_name} data types:', df.dtypes)
+    print(f'{df_name} dataset head:', df.head())
 
 def missing_val_analysis(df, df_name):
     '''
@@ -158,7 +158,7 @@ def eda_pipeline(df, df_name):
     '''
     purpose: runs the three eda functions in sequence for a given dataset
     '''
-    dataset_understanding(df)
+    dataset_understanding(df, df_name)
     missing_val_analysis(df, df_name)
     numeric_distrib_review(df, df_name)
 

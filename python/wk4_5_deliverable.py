@@ -14,7 +14,7 @@ import pandas as pd
 # import matplotlib.pyplot as plt
 
 # load data from folder
-folder = Path('../data')
+folder = Path('./data')
 
 # filtered datasets with mortgage rates
 sold = pd.read_csv(folder / 'sold_with_rates.csv', low_memory = False)
@@ -57,8 +57,12 @@ def clean_dataset(df, df_name):
     print(df[date_cols].dtypes)
 
     # check cols w >90% nulls
-    flag_over_90 = f"{df_name}_null_summary[sold_null_summary['null pct'] > 90].index.tolist()"
-    flag_over_90.sort()
+    if df_name == 'sold':
+        flag_over_90 = sold_null_summary[sold_null_summary['null pct'] > 90].index.tolist()
+    elif df_name == 'listings':
+        flag_over_90 = listings_null_summary[listings_null_summary['null pct'] > 90].index.tolist()
+    
+    # flag_over_90.sort()
     print('Columns with over 90% nulls:\n', flag_over_90)
 
     '''
@@ -86,7 +90,10 @@ def clean_dataset(df, df_name):
     '''
 
     # consider dropping cols w >50% nulls
-    flag_over_50 = f"{df_name}_null_summary[sold_null_summary['null pct'] > 50].index.tolist()"
+    if df_name == 'sold':
+        flag_over_50 = sold_null_summary[sold_null_summary['null pct'] > 50].index.tolist()
+    elif df_name == 'listings':
+        flag_over_50 == listings_null_summary[listings_null_summary['null pct'] > 50].index.tolist()
 
     # remove core fields from the list of cols to drop
     core_fields = ['ClosePrice', 'ListPrice', 'OriginalListPrice',
@@ -97,7 +104,7 @@ def clean_dataset(df, df_name):
         if field in flag_over_50:
             flag_over_50.remove(field)
 
-    flag_over_50.sort()
+    # flag_over_50.sort()
     print(len(flag_over_50), 'columns with over 50% nulls (excl. core fields):')
     print(flag_over_50)
 
@@ -123,7 +130,7 @@ def clean_dataset(df, df_name):
             if j in flag_over_90:
                 flag_over_50.remove(j)
 
-    flag_over_50.sort()
+    # flag_over_50.sort()
     print(len(flag_over_50), 'columns with over 50% nulls (excl. core fields):')
     print(flag_over_50)
 
@@ -136,12 +143,26 @@ def clean_dataset(df, df_name):
     # take a look at remaining columns to determine what else to remove
     print(sorted(clean_df.columns))
 
-    cols_to_remove = ['ListAgentFirstName',
-                      'ListAgentLastName',
-                      'StreetNumberNumeric',
+    cols_to_remove = ['ListAgentFirstName',     # listagentfullname column exists
+                      'ListAgentLastName',          # same as above
+                      'StreetNumberNumeric',    # unhelpful for analysis
+                      'ListAgentEmail',         # unhelpful for analysis
+                      'PropertyType',           # filtered to residential property types
+                      'LotSizeArea',            # a mix of sq ft. and acres populate this column
+                      'StateOrProvince',         # filtered to only california properties
+                      'ListingKeyNumeric',      # equivalent to listingkey column
+                      'BuyerAgentFirstName',    # buyeragentmlsid column exists
+                      'BuyerAgentLastName',         # same as above
                       ]
     
     clean_df = clean_df.drop(columns = cols_to_remove)
+    print('Shape of df after dropping columns:', clean_df.shape)
+    print(clean_df.head())
+
+    # if df_name == 'sold':
+    #     clean_df.to_csv(f'./data/sold_clean.csv', index = False)
+    # if df_name == 'listings':
+    #     clean_df.to_csv(f'./data/listings_clean.csv', index = False)
 
 def consistency_checks(df, df_name):
     '''
@@ -167,3 +188,5 @@ def cleaning_pipeline(df, df_name):
     clean_dataset(df, df_name)
     consistency_checks(df, df_name)
     geographic_checks(df, df_name)
+
+clean_dataset(sold, 'sold')
