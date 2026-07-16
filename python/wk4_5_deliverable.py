@@ -193,7 +193,7 @@ def consistency_checks(df, df_name):
                                     (df['PurchaseContractDate'] < df['CloseDate']))
 
     # check that these columns were made
-    df[['listing_after_close_flag', 'purchase_after_close_flag', 'negative_timeline_flag']].head()
+    print(df[['listing_after_close_flag', 'purchase_after_close_flag', 'negative_timeline_flag']].head())
 
 def geographic_checks(df, df_name):
     '''
@@ -207,13 +207,13 @@ def geographic_checks(df, df_name):
     # lat/lon is null
     df['missing_coords_flag'] = (df['Latitude'].isna()) | (df['Longitude'].isna())
 
-    print(df[df['missing_coords_flag'] == True].shape)
+    print('# of rows with missing coordinates:', df[df['missing_coords_flag'] == True].shape[0])
     print(df[df['missing_coords_flag'] == True].head())
 
     # lat = 0 or lon = 0
     df['sentinel_coords_flag'] = (df['Latitude'] == 0) | (df['Longitude'] == 0)
 
-    print(df[df['sentinel_coords_flag'] == True].shape)
+    print('# of rows with sentinel null coordinates:', df[df['sentinel_coords_flag'] == True].shape[0])
     print(df[df['sentinel_coords_flag'] == True].head())
 
     # lon > 0
@@ -222,7 +222,7 @@ def geographic_checks(df, df_name):
 
 
 def cleaning_pipeline(df, df_name):
-    load_dataset(df)
+    load_dataset(df, df_name)
     clean_dataset(df, df_name)
     consistency_checks(df, df_name)
     geographic_checks(df, df_name)
@@ -232,4 +232,4 @@ def cleaning_pipeline(df, df_name):
     # if df_name == 'listings':
     #     clean_df.to_csv(f'./data/listings_clean.csv', index = False)
 
-# clean_dataset(sold, 'sold')
+# cleaning_pipeline(sold, 'sold')
