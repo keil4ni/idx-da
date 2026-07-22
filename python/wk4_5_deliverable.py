@@ -80,7 +80,7 @@ def clean_dataset(df, df_name):
     # drop cols w >90% nulls
     df = df.drop(columns = flag_over_90)
 
-    print(f'{df_name} shape after dropping:', df.shape)
+    print(f'{df_name} shape after dropping columns with over 90% nulls:', df.shape)
     print(df.head())
 
     '''
@@ -122,10 +122,12 @@ def clean_dataset(df, df_name):
                     'MiddleOrJuniorSchoolDistrict',
                     'HighSchool']
 
+    # remove school fields from flagged
     for field in school_fields:
         if field in flag_over_50:
             flag_over_50.remove(field)
 
+    # remove overlapping cols from flag50
     for i in flag_over_90:
         for j in flag_over_50:
             if j in flag_over_90:
@@ -139,18 +141,13 @@ def clean_dataset(df, df_name):
     clean_df = df.drop(columns = flag_over_50)
     print('Sold shape after dropping:', clean_df.shape)
 
-    print(clean_df.head())
-
-    # take a look at remaining columns to determine what else to remove
-    print(sorted(clean_df.columns))
-
     cols_to_remove = ['ListAgentFirstName',     # listagentfullname column exists
                       'ListAgentLastName',          # same as above
                       'StreetNumberNumeric',    # unhelpful for analysis
                       'ListAgentEmail',         # unhelpful for analysis
                       'PropertyType',           # filtered to residential property types
                       'LotSizeArea',            # a mix of sq ft. and acres populate this column
-                      'StateOrProvince',         # filtered to only california properties
+                      'StateOrProvince',        # filtered to only california properties
                       'ListingKeyNumeric',      # equivalent to listingkey column
                       'BuyerAgentFirstName',    # buyeragentmlsid column exists
                       'BuyerAgentLastName',         # same as above
@@ -163,6 +160,8 @@ def clean_dataset(df, df_name):
 
     print('Shape of df after dropping columns:', clean_df.shape)
     print(clean_df.head())
+
+    return clean_df
 
 def consistency_checks(df, df_name):
     '''
@@ -220,12 +219,15 @@ def geographic_checks(df, df_name):
     df['pos_lon_flag'] = df['Longitude'] > 0
     # output should be 0 since i already filtered out non-cali coordinates in cleaning
 
+    # out of state (oos) coords
+    df['oos_coords_flag'] = (df['Latitude'].between(32.0, 42.5) & df['Longitude'].between(-125.0, -113.5))
+
 
 def cleaning_pipeline(df, df_name):
     load_dataset(df, df_name)
-    clean_dataset(df, df_name)
-    consistency_checks(df, df_name)
-    geographic_checks(df, df_name)
+    clean_df = clean_dataset(df, df_name)
+    clean_df = consistency_checks(clean_df, df_name)
+    clean_df = geographic_checks(clean_df, df_name)
 
     # if df_name == 'sold':
     #     clean_df.to_csv(f'./data/sold_clean.csv', index = False)
