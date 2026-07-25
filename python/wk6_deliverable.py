@@ -40,7 +40,34 @@ def ft_eng(df, df_name):
     # measures time from purchase date to close date
     df['contract_to_close_days'] = df['CloseDate'] - df['PurchaseContractDate']
 
-    # add school districts
+    # check that engineered columns were created
+    print(
+        df['price_ratio',
+           'price_per_sqft',
+           'year',
+           'month',
+           'close_to_original_list_ratio',
+           'listing_to_contract_days',
+           'contract_to_close_days'
+           'DistrictName'
+           ].head()
+    )
+
+def add_school_districts(df):
+    ''' 
+    purpose: add school districts using the properties'
+    latitude/longitude values
+    '''
+    gdf = gpd.read_file('./data/school_districts.geojson')
+
+    # filter to only include unified school districts
+    filtered_gdf = gdf[gdf['DistrictType'] == 'Unified']
+
+    # convert each property's lat/lon into geographic point
+
+    # spatial join to determine which unified school district polygon contains each property
+
+    # add DistrictName as new dataset column
 
 
 def segment_analysis(df, df_name):
@@ -49,13 +76,27 @@ def segment_analysis(df, df_name):
     to uncover market patterns
     '''
 
+    metrics = ['PropertySubType',
+               'CountyOrParish',
+               'MLSAreaMajor',
+               'ListOfficeName',
+               'BuyerOfficeName']
+
+    print(f'{df_name} DATASET')
+
+    for metric in metrics:
+        print(f'Summary statistics for {metric}:')
+        print(df[metric].describe())
+
+
 def pipeline(df, df_name):
     ''' 
     purpose: run feature engineering function and segment
     analysis in one go instead of running each separately
     '''
     ft_eng(df, df_name)
-    segment_analysis(df, df_name)
+    clean_df = add_school_districts(df)
+    segment_analysis(clean_df, df_name)
 
 # pipeline(sold, 'sold')
 # pipeline(listings, 'listings')

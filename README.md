@@ -16,16 +16,24 @@
 - ``wk3_deliverable.py`` fetches live data from FRED API, resamples to monthly averages, merges them into sold & listings datasets using year_month key, & performs validation check to confirm there are no nulls
 
 ### Week 4-5 deliverables
-- **(WIP)** ``wk4_5_deliverable.py`` performs the following:
+- ``wk4_5_deliverable.py`` performs the following:
     - convert date fields to datetime format
     - remove unnecessary or redundant columns
     - handle missing values appropriately
     - ensure numeric fields are properly typed
     - remove or flag invalid numeric values
+- ``wk4_5.md`` is a data quality summary that documents the following:
+    - before/after row counts
+    - data type confirmations
+    - date consistency flag counts
+    - noting and handling invalid coordinate records
 
 ### Week 6 deliverables
-- WIP
+- ``wk6_deliverable.py`` performs feature engineering on existing columns, adds school districts according to property latitude and longitude values, and segment analysis on select columns
 
 ### Week 7 deliverables
+- ``wk7_deliverable.py`` detects and flags outliers based on IQR to improve dataset reliability for analytics
+
+### Week 8 deliverables
 - WIP
 
