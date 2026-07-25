@@ -11,7 +11,7 @@ WK4-5 DELIVERABLE
 # import stuff
 from pathlib import Path
 import pandas as pd
-# import matplotlib.pyplot as plt
+import numpy as np
 
 # load data from folder
 folder = Path('./data')
@@ -35,7 +35,7 @@ def load_dataset(df, df_name):
     elif df_name == 'listings':
         print(f'{df_name} null summary dataset:\n', listings_null_summary)
     
-def clean_dataset(df, df_name):
+def clean_cols(df, df_name):
     '''
     purpose: 
     - convert date fields to datetime format,
@@ -55,7 +55,7 @@ def clean_dataset(df, df_name):
 
     # check that changes have been made
     print('Check that datetime changes have been applied:')
-    print(df[date_cols].dtypes)
+    print(df[date_cols].dtypes, '\n')
 
     # check cols w >90% nulls
     if df_name == 'sold':
@@ -63,8 +63,7 @@ def clean_dataset(df, df_name):
     elif df_name == 'listings':
         flag_over_90 = listings_null_summary[listings_null_summary['null pct'] > 90].index.tolist()
     
-    # flag_over_90.sort()
-    print('Columns with over 90% nulls:\n', flag_over_90)
+    print('Columns with over 90% nulls:\n', flag_over_90, '\n')
 
     '''
     from the real_estate_primer.pdf, our key data fields are:
@@ -141,6 +140,7 @@ def clean_dataset(df, df_name):
     clean_df = df.drop(columns = flag_over_50)
     print('Sold shape after dropping:', clean_df.shape)
 
+    # manually remove columns
     cols_to_remove = ['ListAgentFirstName',     # listagentfullname column exists
                       'ListAgentLastName',          # same as above
                       'StreetNumberNumeric',    # unhelpful for analysis
@@ -153,14 +153,15 @@ def clean_dataset(df, df_name):
                       'BuyerAgentLastName',         # same as above
                       ]
 
-    clean_df = clean_df.drop(columns = cols_to_remove)
     if df_name == 'sold':
-        clean_df = clean_df.drop(columns = 'MlsStatus')
-        # sold properties means all mls statuses are closed
+        cols_to_remove.append('MlsStatus') # sold properties = all statuses are closed
+    elif df_name == 'listings':
+        dupe_cols = [col for col in df.columns if col.endswith('.1')]
+        for col in dupe_cols:
+            cols_to_remove.append(col)
 
-    print('Shape of df after dropping columns:', clean_df.shape)
-    print(clean_df.head())
-
+    clean_df = clean_df.drop(columns = cols_to_remove)
+    
     return clean_df
 
 def consistency_checks(df, df_name):
@@ -222,16 +223,49 @@ def geographic_checks(df, df_name):
     # out of state (oos) coords
     df['oos_coords_flag'] = (df['Latitude'].between(32.0, 42.5) & df['Longitude'].between(-125.0, -113.5))
 
+def clean_sold_rows(df, df_name):
+    '''
+    purpose: looks into flagged columns created from 'consistency'
+    and 'geographic'-check functions for the SOLD dataset
+    '''
+
+
+
+def clean_listings_rows(df, df_name):
+    '''
+    purpose: looks into flagged columns created from 'consistency'
+    and 'geographic'-check functions for the LISTINGS dataset
+    '''
+
+
 
 def cleaning_pipeline(df, df_name):
+    print('LOADING DATASET...\n')
     load_dataset(df, df_name)
-    clean_df = clean_dataset(df, df_name)
+
+    print('STARTING CLEANING...\n')
+    clean_df = clean_cols(df, df_name)
+
+    print('PERFORMING CONSISTENCY CHECKS...\n')
     clean_df = consistency_checks(clean_df, df_name)
+
+    print('PERFORMING GEOGRAPHIC CHECKS...\n')
     clean_df = geographic_checks(clean_df, df_name)
 
+    print('CLEANING ROWS...\n')
+    if df_name == 'sold':
+        clean_df = clean_sold_rows(df, df_name)
+    elif df_name == 'listings':
+        clean_df = clean_listings_rows(df, df_name)
+
     # if df_name == 'sold':
-    #     clean_df.to_csv(f'./data/sold_clean.csv', index = False)
+    #     print('Saving sold dataframe to csv...')
+    #     clean_df.to_csv(f'./data/wk5_sold_clean.csv', index = False)
+    #     print('Successfully saved')
     # if df_name == 'listings':
-    #     clean_df.to_csv(f'./data/listings_clean.csv', index = False)
+    #     print('Saving listings dataframe to csv...')
+    #     clean_df.to_csv(f'./data/wk5_listings_clean.csv', index = False)
+    #     print('Successfully saved')
 
 # cleaning_pipeline(sold, 'sold')
+# cleaning_pipeline(listings, 'listings')

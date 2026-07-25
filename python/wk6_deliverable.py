@@ -14,7 +14,7 @@ listings = pd.read_csv(folder / 'listings_clean.csv', low_memory = False)
 print(sold.head())
 print(listings.head())
 
-def ft_eng(df, df_name):
+def ft_eng(df):
     ''' 
     purpose: create key metrics using existing columns
     and add school districts using properties' lat/lon values
@@ -94,9 +94,14 @@ def pipeline(df, df_name):
     purpose: run feature engineering function and segment
     analysis in one go instead of running each separately
     '''
-    ft_eng(df, df_name)
+    ft_eng(df)
     clean_df = add_school_districts(df)
     segment_analysis(clean_df, df_name)
 
-# pipeline(sold, 'sold')
-# pipeline(listings, 'listings')
+    return clean_df
+
+# sold_clean = pipeline(sold, 'sold')
+# listings_clean = pipeline(listings, 'listings')
+
+# sold_clean.to_csv('./data/processed/wk6_sold_clean.csv')
+# listings_clean.to_csv('./data/processed/wk6_listings_clean.csv')
