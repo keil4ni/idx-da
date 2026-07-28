@@ -55,7 +55,7 @@ sold_df = pd.concat(sold)
 print('Total sold row count after concat (and before filtering):', sold_df.shape)
 # sold_df.head()
 # ROW COUNT: 666037 after getting june 2026 data
-sold_df.to_csv('./data/unfiltered_sold.csv', index = False) # save unfiltered sold csv for reference
+sold_df.to_csv('./data/processed/wk1_unfiltered_sold.csv', index = False) # save unfiltered sold csv for reference
 
 # filter property type by residential
 filtered_sold = sold_df[sold_df['PropertyType'] == 'Residential']
@@ -72,7 +72,7 @@ listing_df = pd.concat(listing)
 print('Total listing row count after concat (and before filtering):', listing_df.shape)
 # listing_df.head()
 # ROW COUNT: 955190 after getting june 2026 data
-listing_df.to_csv('./data/unfiltered_listings.csv', index = False) # save unfiltered listing csv for reference
+listing_df.to_csv('./data/processed/wk1_unfiltered_listings.csv', index = False) # save unfiltered listing csv for reference
 
 # filter property type by residential
 filtered_listing = listing_df[listing_df['PropertyType'] == 'Residential']
@@ -84,6 +84,6 @@ print('Total listing row count after filtering:', filtered_listing.shape)
 
 
 # SAVE filtered dataframes as csv file
-filtered_sold.to_csv('./data/sold.csv', index = False)
-filtered_listing.to_csv('./data/listings.csv', index = False)
+filtered_sold.to_csv('./data/processed/wk1_sold.csv', index = False)
+filtered_listing.to_csv('./data/processed/wk1_listings.csv', index = False)
 

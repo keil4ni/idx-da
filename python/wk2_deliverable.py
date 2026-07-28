@@ -4,15 +4,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # load data from folder
-folder = Path('./data')
+folder = Path('./data/processed')
 
 # filtered dataset
-listings = pd.read_csv(folder / 'listings.csv', low_memory = False)
-sold = pd.read_csv(folder / 'sold.csv', low_memory = False)
+listings = pd.read_csv(folder / 'wk1_listings.csv', low_memory = False)
+sold = pd.read_csv(folder / 'wk1_sold.csv', low_memory = False)
 
 # unfiltered dataset, needed for eda 
-raw_listings = pd.read_csv(folder / 'unfiltered_listings.csv', low_memory = False)
-raw_sold = pd.read_csv(folder / 'unfiltered_sold.csv', low_memory = False)
+raw_listings = pd.read_csv(folder / 'wk1_unfiltered_listings.csv', low_memory = False)
+raw_sold = pd.read_csv(folder / 'wk1_unfiltered_sold.csv', low_memory = False)
 
 def dataset_understanding(df, df_name):
     '''
@@ -208,7 +208,7 @@ def eda_pipeline(df, df_name):
 
     # save filtered dataset as new csv
     print(f'Saving {df_name} dataset to csv...')
-    df.to_csv(f'./data/{df_name}.csv', index = False)
+    df.to_csv(f'./data/processed/wk2_{df_name}.csv', index = False)
 
 # run eda pipeline for listings dataset
 eda_pipeline(listings, 'listings')

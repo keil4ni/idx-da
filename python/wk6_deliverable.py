@@ -8,8 +8,8 @@ import geopandas as gpd
 folder = Path('./data/processed')
 
 # filtered datasets with mortgage rates
-sold = pd.read_csv(folder / 'sold_clean.csv', low_memory = False)
-listings = pd.read_csv(folder / 'listings_clean.csv', low_memory = False)
+sold = pd.read_csv(folder / 'wk5_sold_clean.csv', low_memory = False)
+listings = pd.read_csv(folder / 'wk5_listings_clean.csv', low_memory = False)
 
 print(sold.head())
 print(listings.head())
@@ -98,10 +98,9 @@ def pipeline(df, df_name):
     clean_df = add_school_districts(df)
     segment_analysis(clean_df, df_name)
 
-    return clean_df
+    # save filtered dataset as new csv
+    print(f'Saving {df_name} dataset to csv...')
+    clean_df.to_csv(f'./data/processed/wk6_{df_name}.csv', index = False)
 
-# sold_clean = pipeline(sold, 'sold')
-# listings_clean = pipeline(listings, 'listings')
-
-# sold_clean.to_csv('./data/processed/wk6_sold_clean.csv')
-# listings_clean.to_csv('./data/processed/wk6_listings_clean.csv')
+pipeline(sold, 'sold')
+pipeline(listings, 'listings')

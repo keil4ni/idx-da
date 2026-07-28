@@ -25,10 +25,10 @@ mortgage_monthly = (
 
 # create matching year_month key on MLS datasets
 # load in sold & listings dataset from wk2
-folder = Path('./data')
+folder = Path('./data/processed')
 
-listings = pd.read_csv(folder / 'listings.csv')
-sold = pd.read_csv(folder / 'sold.csv')
+listings = pd.read_csv(folder / 'wk2_listings.csv')
+sold = pd.read_csv(folder / 'wk2_sold.csv')
 
 # sold dataset: key off closedate
 sold['year_month'] = pd.to_datetime(sold['CloseDate']).dt.to_period('M')
@@ -52,5 +52,5 @@ print(sold_with_rates[
 ].head())
 
 # save merged datasets
-sold_with_rates.to_csv('./data/sold_with_rates.csv', index = False)
-listings_with_rates.to_csv('./data/listings_with_rates.csv', index = False)
+sold_with_rates.to_csv('./data/processed/wk3_sold_with_rates.csv', index = False)
+listings_with_rates.to_csv('./data/processed/wk3_listings_with_rates.csv', index = False)

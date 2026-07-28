@@ -1,24 +1,14 @@
-'''
-WK4-5 DELIVERABLE
-- document every xformation made & why
-- include:
-    - before/after counts
-    - dtype confirmations
-    - date consistency flag counts
-    - geographic data quality summary noting invalid coordinate records
-'''
-
 # import stuff
 from pathlib import Path
 import pandas as pd
 import numpy as np
 
 # load data from folder
-folder = Path('./data')
+folder = Path('./data/processed')
 
 # filtered datasets with mortgage rates
-sold = pd.read_csv(folder / 'sold_with_rates.csv', low_memory = False)
-listings = pd.read_csv(folder / 'listings_with_rates.csv', low_memory = False)
+sold = pd.read_csv(folder / 'wk3_sold_with_rates.csv', low_memory = False)
+listings = pd.read_csv(folder / 'wk3_listings_with_rates.csv', low_memory = False)
 
 # null count summary as reference for cleaning
 sold_null_summary = pd.read_csv(folder / 'sold_null_summary.csv', index_col = 0)
@@ -258,14 +248,10 @@ def cleaning_pipeline(df, df_name):
     elif df_name == 'listings':
         clean_df = clean_listings_rows(df, df_name)
 
-    # if df_name == 'sold':
-    #     print('Saving sold dataframe to csv...')
-    #     clean_df.to_csv(f'./data/wk5_sold_clean.csv', index = False)
-    #     print('Successfully saved')
-    # if df_name == 'listings':
-    #     print('Saving listings dataframe to csv...')
-    #     clean_df.to_csv(f'./data/wk5_listings_clean.csv', index = False)
-    #     print('Successfully saved')
+    # save new df as csv
+    print('Saving dataframe to csv...')
+    clean_df.to_csv(f'./data/processed/wk4_5_{df_name}_clean.csv', index = False)
+    print('Successfully saved')
 
 # cleaning_pipeline(sold, 'sold')
 # cleaning_pipeline(listings, 'listings')

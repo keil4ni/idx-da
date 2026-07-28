@@ -1,14 +1,13 @@
 # import stuff
 from pathlib import Path
 import pandas as pd
-import numpy as np
 
 # load data from folder
 folder = Path('./data/processed')
 
 # filtered datasets with mortgage rates
-sold = pd.read_csv(folder / 'sold_clean.csv', low_memory = False)
-listings = pd.read_csv(folder / 'listings_clean.csv', low_memory = False)
+sold = pd.read_csv(folder / 'wk6_sold_clean.csv', low_memory = False)
+listings = pd.read_csv(folder / 'wk6_listings_clean.csv', low_memory = False)
 
 print(sold.head())
 print(listings.head())
@@ -43,6 +42,13 @@ def iqr(df):
 
 sold_no_outliers, sold_flag_outliers = iqr(sold)
 listings_no_outliers, listings_flag_outliers = iqr(listings)
+
+sold_no_outliers.to_csv('./data/processed/wk7_sold_clean.csv', index = False)
+sold_flag_outliers.to_csv('./data/processed/wk7_sold_flagged.csv', index = False)
+
+listings_no_outliers.to_csv('./data/processed/wk7_listings_clean.csv', index = False)
+listings_flag_outliers.to_csv('./data/processed/wk7_listings_flagged.csv', index = False)
+
 
 '''
 (ClosePrice, LivingArea, DaysOnMarket).
