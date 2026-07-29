@@ -9,10 +9,7 @@ folder = Path('./data/processed')
 sold = pd.read_csv(folder / 'wk6_sold.csv', low_memory = False)
 listings = pd.read_csv(folder / 'wk6_listings.csv', low_memory = False)
 
-print(sold.head())
-print(listings.head())
-
-def iqr(df):
+def iqr(df, df_name):
     '''
     purpose: implements statistical method to identify, flag, and
     remove outliers so the data doesn't misrepresent the typical market
@@ -20,6 +17,8 @@ def iqr(df):
     fields = ['ClosePrice',
               'LivingArea',
               'DaysOnMarket']
+
+    print(f'{df_name.upper()} dataset:')
 
     for field in fields:
         Q1 = df[field].quantile(0.25)
@@ -34,14 +33,34 @@ def iqr(df):
         flagged_df = df.copy()
         flagged_df[f'{field}_outlier'] = (df[field] >= lower) & (df[field] <= upper)
 
+        print(f'{field} after flagging outliers:')
+        print('Dataset size:', flagged_df.shape)
+        print('Median:', flagged_df[field].median(), '\n')
+
         # remove outliers
         clean_df = df[(df[field] >= lower) & (df[field] <= upper)]
+
+        print(f'{field} after removing outliers:')
+        print(f'Dataset size:', clean_df.shape)
+        print('Median:', clean_df[field].median(), '\n')
+
+        og_size = flagged_df[field].shape[0]
+        new_size = clean_df[field].shape[0]
+
+        og_median = flagged_df[field].median()
+        new_median = clean_df[field].median()
+
+        pct_removed = ((og_size - new_size) / og_size) * 100
+        median_change_pct = ((og_median - new_median) / og_median) * 100
+
+        print('Rows removed (%):', round(pct_removed, 2))
+        print('Median change (%):', round(median_change_pct, 2))
 
 
     return clean_df, flagged_df
 
-sold_no_outliers, sold_flag_outliers = iqr(sold)
-listings_no_outliers, listings_flag_outliers = iqr(listings)
+sold_no_outliers, sold_flag_outliers = iqr(sold, 'sold')
+listings_no_outliers, listings_flag_outliers = iqr(listings, 'listings')
 
 print('Saving sold without outliers...')
 sold_no_outliers.to_csv('./data/processed/wk7_sold_clean.csv', index = False)
@@ -53,11 +72,4 @@ listings_no_outliers.to_csv('./data/processed/wk7_listings_clean.csv', index = F
 print('Saving listings with outliers...')
 listings_flag_outliers.to_csv('./data/processed/wk7_listings_flagged.csv', index = False)
 
-
-'''
-(ClosePrice, LivingArea, DaysOnMarket).
-Add outlier flag columns rather than deleting 
-records outright. Save both a full flagged dataset and a clean
-filtered dataset. Include a written comparison of dataset size 
-and median values before and after filtering.
-'''
+print('Datasets successfully saved.')

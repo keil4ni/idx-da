@@ -1,68 +1,30 @@
+## Week 6
+Summary statistics of the following fields (if available):
+- ``PropertySubType``
+- ``CountyOrParish``
+- ``MLSAreaMajor``
+- ``ListOfficeName``
+- ``BuyerOfficeName``
+
 ### ``SOLD`` SEGMENT ANALYSIS
 <hr>
 
-Summary statistics for PropertySubType:
-count                    447164
-unique                       20
-top       SingleFamilyResidence
-freq                     335582
-Name: PropertySubType, dtype: object
-
-Summary statistics for CountyOrParish:
-count          448026
-unique             62
-top       Los Angeles
-freq           111175
-Name: CountyOrParish, dtype: object
-
-Summary statistics for MLSAreaMajor:
-count                387638
-unique                 1091
-top       699 - Not Defined
-freq                  46350
-Name: MLSAreaMajor, dtype: object
-
-Summary statistics for ListOfficeName:
-count      448026
-unique      19160
-top       Compass
-freq        31728
-Name: ListOfficeName, dtype: object
-
-Summary statistics for BuyerOfficeName:
-count      440892
-unique      21877
-top       Compass
-freq        29629
-Name: BuyerOfficeName, dtype: object
+| variable          | count  | unique   | top                       | freq      |
+| ------------------| -----: | -------: | ------------------------: | --------: |
+| PropertySubType   | 605633 | 21       | SingleFamilyResidence     | 442975    |
+| CountyOrParish    | 606998 | 63       | Los Angeles               | 154458    |
+| MLSAreaMajor      | 524494 | 1114     | 699 - Not Defined         | 67507     |
+| ListOfficeName    | 606998 | 21497    | Compass                   | 43289     |
+| BuyerOfficeName   | 440892 | 21877    | Compass                   | 29629     |
 
 ### ``LISTINGS`` SEGMENT ANALYSIS
 <hr>
 
-Summary statistics for PropertySubType:
-count                    605633
-unique                       21
-top       SingleFamilyResidence
-freq                     442975
-Name: PropertySubType, dtype: object 
+| variable          | count  | unique   | top                       | freq      |
+| ------------------| -----: | -------: | ------------------------: | --------: |
+| PropertySubType   | 605633 | 21       | SingleFamilyResidence     | 442975    |
+| CountyOrParish    | 606998 | 63       | Los Angeles               | 154458    |
+| MLSAreaMajor      | 524494 | 1114     | 699 - Not Defined         | 67507     |
+| ListOfficeName    | 606998 | 21497    | Compass                   | 43289     |
 
-Summary statistics for CountyOrParish:
-count          606998
-unique             63
-top       Los Angeles
-freq           154458
-Name: CountyOrParish, dtype: object 
-
-Summary statistics for MLSAreaMajor:
-count                524494
-unique                 1114
-top       699 - Not Defined
-freq                  67507
-Name: MLSAreaMajor, dtype: object 
-
-Summary statistics for ListOfficeName:
-count      606998
-unique      21497
-top       Compass
-freq        43289
-Name: ListOfficeName, dtype: object 
+Note that the Listings dataset does not contain the column ``BuyerOfficeName``.
