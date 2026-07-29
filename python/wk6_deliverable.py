@@ -1,20 +1,19 @@
 # import stuff
 from pathlib import Path
 import pandas as pd
-import numpy as np
 import geopandas as gpd
 
 # load data from folder
 folder = Path('./data/processed')
 
 # filtered datasets with mortgage rates
-sold = pd.read_csv(folder / 'wk5_sold_clean.csv', low_memory = False)
-listings = pd.read_csv(folder / 'wk5_listings_clean.csv', low_memory = False)
+sold = pd.read_csv(folder / 'wk4_5_sold_clean.csv', low_memory = False)
+listings = pd.read_csv(folder / 'wk4_5_listings_clean.csv', low_memory = False)
 
 print(sold.head())
 print(listings.head())
 
-def ft_eng(df):
+def ft_eng(df, df_name):
     ''' 
     purpose: create key metrics using existing columns
     and add school districts using properties' lat/lon values
@@ -26,48 +25,88 @@ def ft_eng(df):
     # normalizes price across sizes
     df['price_per_sqft'] = df['ClosePrice'] / df['LivingArea']
 
+    # i know i converted date fields to datetime but it didnt get saved as datetime
+    date_cols = ['CloseDate',
+                'PurchaseContractDate',
+                'ListingContractDate',
+                'ContractStatusChangeDate']
+    if df_name == 'listings':
+        date_cols.remove('CloseDate')
+
+    df[date_cols] = df[date_cols].apply(pd.to_datetime, errors = 'coerce')
+
     # enables time-series analysis
-    df['year'] = df['CloseDate'].dt.year
-    df['month'] = df['CloseDate'].dt.month
-    # df['YrMo'] = df['CloseDate'].dt.to_period('M')
+    if df_name == 'sold':
+        df['year'] = df['CloseDate'].dt.year
+        df['month'] = df['CloseDate'].dt.month
+        # we already have this column called year_month in the dataset
+        # df['YrMo'] = df['CloseDate'].dt.to_period('M')
 
-    # captures full price reduction history
-    df['close_to_original_list_ratio'] = df['ClosePrice'] / df['OriginalListPrice']
+        # measures time from purchase date to close date
+        df['contract_to_close_days'] = df['CloseDate'] - df['PurchaseContractDate']
 
-    # measures time from listing to accepted offer
-    df['listing_to_contract_days'] = df['PurchaseContractDate'] - df['ListingContractDate']
+        # captures full price reduction history
+        df['close_to_original_list_ratio'] = df['ClosePrice'] / df['OriginalListPrice']
 
-    # measures time from purchase date to close date
-    df['contract_to_close_days'] = df['CloseDate'] - df['PurchaseContractDate']
+        # measures time from listing to accepted offer
+        df['listing_to_contract_days'] = df['PurchaseContractDate'] - df['ListingContractDate']
 
-    # check that engineered columns were created
-    print(
-        df['price_ratio',
-           'price_per_sqft',
-           'year',
-           'month',
-           'close_to_original_list_ratio',
-           'listing_to_contract_days',
-           'contract_to_close_days'
-           'DistrictName'
-           ].head()
-    )
+        # check that engineered columns were created
+        print(
+            df[['price_ratio',
+                'price_per_sqft',
+                'year',
+                'month',
+                'close_to_original_list_ratio',
+                'listing_to_contract_days',
+                'contract_to_close_days'
+                ]].head()
+        )
+    elif df_name == 'listings':
+        # listings doesnt have a closedate col so we cant ft eng the other 4 we made for sold
+        df['close_to_original_list_ratio'] = df['ClosePrice'] / df['OriginalListPrice']
+        df['listing_to_contract_days'] = df['PurchaseContractDate'] - df['ListingContractDate']
+
+        print(
+            df[['close_to_original_list_ratio',
+                'listing_to_contract_days'
+                ]].head()
+        )
+
+
+    return df
 
 def add_school_districts(df):
     ''' 
     purpose: add school districts using the properties'
     latitude/longitude values
     '''
-    gdf = gpd.read_file('./data/school_districts.geojson')
-
+    school_gdf = gpd.read_file('./data/school_districts.geojson')
     # filter to only include unified school districts
-    filtered_gdf = gdf[gdf['DistrictType'] == 'Unified']
+    filtered_school_gdf = school_gdf[school_gdf['DistrictType'] == 'Unified']
+    # only add DistrictName col & geometry for merging
+    filtered_school_gdf = filtered_school_gdf[['DistrictName', 'geometry']]
 
     # convert each property's lat/lon into geographic point
+    df_gdf = gpd.GeoDataFrame(
+        df,
+        geometry = gpd.points_from_xy(df['Longitude'], df['Latitude']),
+        crs = 'EPSG:4326'
+    )
+
+    # standardize coord systems so they match otherwise you get a crs mismatch error
+    if df_gdf.crs != school_gdf.crs:
+        df_gdf = df_gdf.to_crs(school_gdf.crs)
 
     # spatial join to determine which unified school district polygon contains each property
+    merged_df = gpd.sjoin(
+        df_gdf,
+        filtered_school_gdf,
+        how = 'left',
+        predicate = 'within'
+    )
 
-    # add DistrictName as new dataset column
+    return merged_df
 
 
 def segment_analysis(df, df_name):
@@ -81,12 +120,14 @@ def segment_analysis(df, df_name):
                'MLSAreaMajor',
                'ListOfficeName',
                'BuyerOfficeName']
+    if df_name == 'listings':
+        metrics.remove('BuyerOfficeName')
 
     print(f'{df_name} DATASET')
 
     for metric in metrics:
         print(f'Summary statistics for {metric}:')
-        print(df[metric].describe())
+        print(df[metric].describe(), '\n')
 
 
 def pipeline(df, df_name):
@@ -94,9 +135,26 @@ def pipeline(df, df_name):
     purpose: run feature engineering function and segment
     analysis in one go instead of running each separately
     '''
-    ft_eng(df)
+    clean_df = ft_eng(df, df_name)
     clean_df = add_school_districts(df)
     segment_analysis(clean_df, df_name)
+
+    # ensure ft eng was performed and school districts were added
+    new_cols = ['price_ratio',
+                'price_per_sqft',
+                'year',
+                'month',
+                'close_to_original_list_ratio',
+                'listing_to_contract_days',
+                'contract_to_close_days',
+                'DistrictName',
+                'geometry']
+    if df_name == 'listings':
+        new_cols.remove('year')
+        new_cols.remove('month')
+        new_cols.remove('contract_to_close_days')
+    
+    print(clean_df[new_cols].head())
 
     # save filtered dataset as new csv
     print(f'Saving {df_name} dataset to csv...')
