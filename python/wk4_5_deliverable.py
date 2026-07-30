@@ -163,7 +163,7 @@ def consistency_checks(df, df_name):
         - purchase_after_close_flag
         - negative_timeline_flag
     '''
-    print('Starting consistency checks...')
+    print(f'Starting consistency checks for {df_name}...')
     # validate logical order of date fields
     invalid_rows = df[~((df['ListingContractDate'] < df['PurchaseContractDate']) & 
                         (df['PurchaseContractDate'] < df['CloseDate']))]

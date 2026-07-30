@@ -1,8 +1,8 @@
-### Week 7
+## Week 7
 Dataset shape and median values before and after filtering outliers
 <hr>
 
-#### SOLD dataset
+### SOLD dataset
 <hr>
 
 | Variable     | Dataset Size (Flagged) | Dataset Size (Removed) | Rows Removed | Median (Flagged) | Median (Removed) | Median Change |
@@ -20,7 +20,7 @@ Percentage-wise,
 | DaysOnMarket |             7.64% |           -11.11% |
 
 
-#### LISTINGS dataset
+### LISTINGS dataset
 <hr>
 
 | Variable     | Dataset Size (Flagged) | Dataset Size (Removed) | Rows Removed | Median (Flagged) | Median (Removed) | Median Change |

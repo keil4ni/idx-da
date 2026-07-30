@@ -91,7 +91,7 @@ def add_school_districts(df):
     df_gdf = gpd.GeoDataFrame(
         df,
         geometry = gpd.points_from_xy(df['Longitude'], df['Latitude']),
-        crs = 'EPSG:4326'
+        crs = 'EPSG:4326'   # coordinate reference system
     )
 
     # standardize coord systems so they match otherwise you get a crs mismatch error
@@ -158,5 +158,7 @@ def pipeline(df, df_name):
     print(f'Saving {df_name} dataset to csv...')
     clean_df.to_csv(f'./data/processed/wk6_{df_name}.csv', index = False)
 
-pipeline(sold, 'sold')
-pipeline(listings, 'listings')
+# pipeline(sold, 'sold')
+# pipeline(listings, 'listings')
+
+segment_analysis(sold, 'sold')
