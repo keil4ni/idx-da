@@ -11,8 +11,8 @@ sold = pd.read_csv(folder / 'wk3_sold_with_rates.csv', low_memory = False)
 listings = pd.read_csv(folder / 'wk3_listings_with_rates.csv', low_memory = False)
 
 # null count summary as reference for cleaning
-sold_null_summary = pd.read_csv(folder / 'sold_null_summary.csv', index_col = 0)
-listings_null_summary = pd.read_csv(folder / 'listings_null_summary.csv', index_col = 0)
+sold_null_summary = pd.read_csv(folder / 'wk2_sold_null_summary.csv', index_col = 0)
+listings_null_summary = pd.read_csv(folder / 'wk2_listings_null_summary.csv', index_col = 0)
 
 def load_dataset(df, df_name):
     '''purpose: ensure that datasets & their null count summaries loaded properly'''

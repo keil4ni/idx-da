@@ -30,10 +30,12 @@
 
 ### Week 6 deliverables
 - ``wk6_deliverable.py`` performs feature engineering on existing columns, adds school districts according to property latitude and longitude values, and segment analysis on select columns
+- ``wk6.md`` contains segment analysis documentation for certain key fields
 
 ### Week 7 deliverables
 - ``wk7_deliverable.py`` detects and flags outliers based on IQR to improve dataset reliability for analytics
+- ``wk7.md`` contains documentation of dataset shape and changes in median before and after filtering for outliers
 
 ### Week 8 deliverables
-- WIP
-
+- ``market_analysis.twbx`` (WIP)
+- ``competitive_analysis.twbx`` (WIP)
