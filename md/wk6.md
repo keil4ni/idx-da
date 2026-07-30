@@ -5,6 +5,7 @@ Summary statistics of the following fields (if available):
 - ``MLSAreaMajor``
 - ``ListOfficeName``
 - ``BuyerOfficeName``
+<hr>
 
 ### ``SOLD`` SEGMENT ANALYSIS
 <hr>
@@ -26,5 +27,4 @@ Summary statistics of the following fields (if available):
 | CountyOrParish    | 606998 | 63       | Los Angeles               | 154458    |
 | MLSAreaMajor      | 524494 | 1114     | 699 - Not Defined         | 67507     |
 | ListOfficeName    | 606998 | 21497    | Compass                   | 43289     |
-
-Note that the Listings dataset does not contain the column ``BuyerOfficeName``.
+| BuyerOfficeName   | 187658 | 14932    | Compass                   | 15036     |

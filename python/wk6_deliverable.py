@@ -120,8 +120,6 @@ def segment_analysis(df, df_name):
                'MLSAreaMajor',
                'ListOfficeName',
                'BuyerOfficeName']
-    if df_name == 'listings':
-        metrics.remove('BuyerOfficeName')
 
     print(f'{df_name} DATASET')
 

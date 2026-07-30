@@ -35,7 +35,7 @@ def iqr(df, df_name):
 
         print(f'{field} after flagging outliers:')
         print('Dataset size:', flagged_df.shape)
-        print('Median:', flagged_df[field].median(), '\n')
+        print('Median:', flagged_df[field].median())
 
         # remove outliers
         clean_df = df[(df[field] >= lower) & (df[field] <= upper)]
@@ -54,7 +54,7 @@ def iqr(df, df_name):
         median_change_pct = ((og_median - new_median) / og_median) * 100
 
         print('Rows removed (%):', round(pct_removed, 2))
-        print('Median change (%):', round(median_change_pct, 2))
+        print('Median change (%):', round(median_change_pct, 2), '\n')
 
 
     return clean_df, flagged_df

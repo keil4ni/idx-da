@@ -45,9 +45,9 @@ def missing_val_analysis(df, df_name):
 
     # save null summary table to csv based on dataset name
     if df_name == 'sold':
-        null_summary.to_csv('./data/sold_null_summary.csv', index = True)
+        null_summary.to_csv('./data/processed/wk2_sold_null_summary.csv', index = True)
     elif df_name == 'listings':
-        null_summary.to_csv('./data/listings_null_summary.csv', index = True)
+        null_summary.to_csv('./data/processed/wk2_listings_null_summary.csv', index = True)
 
 
     # find cols w >50% nulls
@@ -112,9 +112,9 @@ def numeric_distrib_review(df, df_name):
 
     outlier_df = pd.DataFrame(outliers)
     if df_name == 'sold':
-        outlier_df.to_csv('./data/sold_outliers.csv', index = False)
+        outlier_df.to_csv('./data/processed/wk2_sold_outliers.csv', index = False)
     elif df_name == 'listings':
-        outlier_df.to_csv('./data/listings_outliers.csv', index = False)
+        outlier_df.to_csv('./data/processed/wk2_listings_outliers.csv', index = False)
 
     # generate visualizations for each numeric field WITHOUT outliers
     for col in ['ClosePrice', 'LivingArea', 'DaysOnMarket']:
