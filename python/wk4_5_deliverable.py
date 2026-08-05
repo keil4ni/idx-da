@@ -123,6 +123,7 @@ def clean_cols(df, df_name):
 
     # flag_over_50.sort()
     print('\n', len(flag_over_50), 'columns with over 50% nulls (excl. core fields & schools):')
+    flag_over_50.remove('BuyerOfficeName')
     print(flag_over_50)
 
     # drop cols w >50% nulls (excl. core fields and schools)
@@ -202,7 +203,7 @@ def consistency_checks(df, df_name):
                                         (df['PurchaseContractDate'] < df['CloseDate']))
         print('\n# rows with negative timeline:', df[df['negative_timeline_flag'] == True].shape[0])
     elif df_name == 'listings':
-        df['negative_timeline_flag'] = df['ListingContractDate'] > df['PurchaseContractDate']
+        df['negative_timeline_flag'] = (df['ListingContractDate'] > df['PurchaseContractDate'])
         print('\n# rows with negative timeline:', df[df['negative_timeline_flag'] == True].shape[0])
 
 
@@ -396,7 +397,6 @@ def clean_sold_rows(df):
     print('Shape after removing flagged columns:', df.shape)
 
     return df
-
 
 def clean_listings_rows(df):
     '''
@@ -604,8 +604,6 @@ def clean_listings_rows(df):
     print('Shape after removing flagged columns:', df.shape)
 
     return df
-
-
 
 def cleaning_pipeline(df, df_name):
     print('LOADING DATASET...\n')

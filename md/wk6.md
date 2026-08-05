@@ -18,6 +18,8 @@ Summary statistics of the following fields (if available):
 | ListOfficeName    | 448026 | 19160    | Compass                   | 31728     |
 | BuyerOfficeName   | 440892 | 21877    | Compass                   | 29629     |
 
+> Final dataset shape: (448026, 55)
+
 ### ``LISTINGS`` SEGMENT ANALYSIS
 <hr>
 
@@ -28,3 +30,7 @@ Summary statistics of the following fields (if available):
 | MLSAreaMajor      | 524494 | 1114     | 699 - Not Defined         | 67507     |
 | ListOfficeName    | 606998 | 21497    | Compass                   | 43289     |
 | BuyerOfficeName   | 187658 | 14932    | Compass                   | 15036     |
+
+> Final dataset shape: (606998, 46)
+
+Note: School columns were dropped from both datasets

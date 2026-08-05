@@ -52,5 +52,7 @@ print(sold_with_rates[
 ].head())
 
 # save merged datasets
+print('Save merged datasets with mortgage rates as csv files...')
 sold_with_rates.to_csv('./data/processed/wk3_sold_with_rates.csv', index = False)
 listings_with_rates.to_csv('./data/processed/wk3_listings_with_rates.csv', index = False)
+print('Successfully saved merged datasets as csv files')
