@@ -84,6 +84,7 @@ print('Total listing row count after filtering:', filtered_listing.shape)
 
 
 # SAVE filtered dataframes as csv file
+print('Saving filtered sold and listing datasets as csv files...')
 filtered_sold.to_csv('./data/processed/wk1_sold.csv', index = False)
 filtered_listing.to_csv('./data/processed/wk1_listings.csv', index = False)
-
+print('Successfully saved filtered datasets as csv files')
