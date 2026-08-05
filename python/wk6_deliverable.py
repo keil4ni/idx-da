@@ -134,7 +134,7 @@ def pipeline(df, df_name):
     analysis in one go instead of running each separately
     '''
     clean_df = ft_eng(df, df_name)
-    clean_df = add_school_districts(df)
+    clean_df = add_school_districts(clean_df)
     segment_analysis(clean_df, df_name)
 
     # ensure ft eng was performed and school districts were added
@@ -154,11 +154,17 @@ def pipeline(df, df_name):
     
     print(clean_df[new_cols].head())
 
+    print('Shape before removing school columns:', clean_df.shape)
+    # remove school columns
+    clean_df = clean_df.drop(columns = ['ElementarySchool',
+                                        'MiddleOrJuniorSchool',
+                                        'HighSchool',
+                                        'HighSchoolDistrict'])
+    print('Shape after removing school columns:', clean_df.shape)
+
     # save filtered dataset as new csv
     print(f'Saving {df_name} dataset to csv...')
     clean_df.to_csv(f'./data/processed/wk6_{df_name}.csv', index = False)
 
-# pipeline(sold, 'sold')
-# pipeline(listings, 'listings')
-
-segment_analysis(sold, 'sold')
+pipeline(sold, 'sold')
+pipeline(listings, 'listings')
