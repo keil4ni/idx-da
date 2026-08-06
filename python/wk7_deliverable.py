@@ -27,7 +27,7 @@ def iqr(df, df_name):
         IQR = Q3 - Q1
 
         lower = Q1 - 3.0 * IQR
-        lower = max(lower, 0)
+        lower = max(lower, 0)   # exclude negative values
         upper = Q3 + 3.0 * IQR
 
         # flag outliers
