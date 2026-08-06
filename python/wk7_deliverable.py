@@ -26,8 +26,9 @@ def iqr(df, df_name):
 
         IQR = Q3 - Q1
 
-        lower = Q1 - 1.5 * IQR
-        upper = Q3 + 1.5 * IQR
+        lower = Q1 - 3.0 * IQR
+        lower = max(lower, 0)
+        upper = Q3 + 3.0 * IQR
 
         # flag outliers
         flagged_df = df.copy()
