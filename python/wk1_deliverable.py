@@ -9,7 +9,7 @@ sold_shapes = []
 listing = []
 listing_shapes = []
 
-END_MONTH = 6
+END_MONTH = 7
 
 # get files from each month from years 2024-2026
 for year in [2024, 2025, 2026]:

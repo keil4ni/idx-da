@@ -7,17 +7,17 @@ Dataset shape and median values before and after filtering outliers
 
 | Variable     | Dataset Size (Flagged) | Dataset Size (Removed) | Rows Removed | Median (Flagged) | Median (Removed) | Median Change |
 | ------------ | ---------------------: | ---------------------: | -----------: | ---------------: | ---------------: | ------------: |
-| ClosePrice   |                448,026 |                414,562 |       33,464 |        825,000.0 |        784,385.5 |     -40,614.5 |
-| LivingArea   |                448,026 |                428,198 |       19,828 |          1,646.0 |          1,608.0 |         -38.0 |
-| DaysOnMarket |                448,026 |                413,787 |       34,239 |             18.0 |             16.0 |          -2.0 |
+| ClosePrice   |                465,039 |                450,057 |       14,982 |        825,000.0 |        805,000.0 |     -20,000.0 |
+| LivingArea   |                465,039 |                459,659 |        5,380 |          1,646.0 |          1,636.0 |         -10.0 |
+| DaysOnMarket |                465,039 |                452,604 |       12,435 |             18.0 |             18.0 |           0.0 |
 
 Percentage-wise,
 
 | Variable     | % of Rows Removed | Median Change (%) |
 | ------------ | ----------------: | ----------------: |
-| ClosePrice   |             7.47% |            -4.92% |
-| LivingArea   |             4.43% |            -2.31% |
-| DaysOnMarket |             7.64% |           -11.11% |
+| ClosePrice   |             3.22% |            -2.42% |
+| LivingArea   |             1.16% |            -0.61% |
+| DaysOnMarket |             2.67% |             0.00% |
 
 
 ### LISTINGS dataset
@@ -25,14 +25,14 @@ Percentage-wise,
 
 | Variable     | Dataset Size (Flagged) | Dataset Size (Removed) | Rows Removed | Median (Flagged) | Median (Removed) | Median Change |
 | ------------ | ---------------------: | ---------------------: | -----------: | ---------------: | ---------------: | ------------: |
-| ClosePrice   |                606,998 |                162,961 |      444,037 |          860,000 |          820,000 |       -40,000 |
-| LivingArea   |                606,998 |                576,563 |       30,435 |            1,672 |            1,625 |           -47 |
-| DaysOnMarket |                606,998 |                549,113 |       57,885 |               11 |               10 |            -1 |
+| ClosePrice   |                631,250 |                171,374 |      459,876 |        860,000.0 |        845,000.0 |     -15,000.0 |
+| LivingArea   |                631,250 |                620,859 |       10,391 |          1,672.0 |          1,656.0 |         -16.0 |
+| DaysOnMarket |                631,250 |                604,626 |       26,624 |             11.0 |             11.0 |           0.0 |
 
 Percentage-wise,
 
 | Variable     | % of Rows Removed | Median Change (%) |
 | ------------ | ----------------: | ----------------: |
-| ClosePrice   |            73.15% |            -4.65% |
-| LivingArea   |             5.01% |            -2.81% |
-| DaysOnMarket |             9.54% |            -9.09% |
+| ClosePrice   |            72.85% |            -1.74% |
+| LivingArea   |             1.65% |            -0.96% |
+| DaysOnMarket |             4.22% |             0.00% |

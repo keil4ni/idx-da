@@ -123,7 +123,10 @@ def clean_cols(df, df_name):
 
     # flag_over_50.sort()
     print('\n', len(flag_over_50), 'columns with over 50% nulls (excl. core fields & schools):')
-    flag_over_50.remove('BuyerOfficeName')
+    if 'BuyerOfficeName' in flag_over_50:
+        flag_over_50.remove('BuyerOfficeName')
+    if 'PurchaseContractDate' in flag_over_50:    # accounts for listing dataset
+        flag_over_50.remove('PurchaseContractDate')
     print(flag_over_50)
 
     # drop cols w >50% nulls (excl. core fields and schools)
@@ -323,11 +326,13 @@ def clean_sold_rows(df):
     )
 
     # remove non-CA rows
+    print('TRANSFORMATION 1: Remove non-CA rows via null cities')
     print('\nShape before removing:', df.shape)
     df = df[~((df['oos_coords_flag'] == True) & (df['City'].isnull()))]
     print('Shape after removing:', df.shape)
 
     # remove out of state coords except cities marked 'Other'
+    print('TRANSFORMATION 2: Remove non-CA rows via city label (Outside Area)')
     print('\nShape before cleaning:', df.shape)
     df = df[
         ~df['City'].isin([
@@ -361,18 +366,16 @@ def clean_sold_rows(df):
     print('Shape after conversion:', df.shape)
     df[df['oos_coords_flag'] == True][['Latitude', 'Longitude', 'City', 'PostalCode']]
 
-    # remove out of state rows + row with flagstaff since that's in AZ
+    # remove null out of state rows + row with flagstaff since that's in AZ
     oos_mask = (
         df['oos_coords_flag'] &
         (df['City'].isna() |
         (df['City'] == 'Flagstaff'))
     )
+    print('TRANSFORMATION 4: Remove non-CA rows + Flagstaff property')
     print('\nShape before removing:', df.shape)
     df = df[~oos_mask]
     print('Shape after removing:', df.shape)
-
-    # fix palmdale zipcode
-    df.loc[319267, 'PostalCode'] = 93551 # used to be 83551
 
     # normalize zipcodes to remove hyphens (e.g 63119-2447)
     df['PostalCode'] = (
@@ -380,6 +383,20 @@ def clean_sold_rows(df):
         .astype(str)
         .str[:5]
     )
+
+    # fix palmdale zipcode
+    df.loc[319267, 'PostalCode'] = 93551 # used to be 83551
+    # fix oakland zipcode
+    df.loc[429446, 'PostalCode'] = 90802 # used to be 80802
+    # fix long beach zipcode
+    df.loc[371546, 'PostalCode'] = 94603 # used to be 49603
+
+    # drop oos zipcodes
+    noncali_zips_mask = df['PostalCode'].str.startswith('9') == False
+    print('\nTRANSFORMATION 7: Remove non-CA rows via postal code')
+    print('Shape before removing:', df.shape)
+    df = df.loc[~noncali_zips_mask]
+    print('Shape after removing:', df.shape)
 
     # drop flagged columns that're done
     print('\nShape before removing flagged columns:', df.shape)
