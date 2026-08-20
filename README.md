@@ -35,10 +35,9 @@
 - ``wk7.md`` contains documentation of dataset shape and changes in median before and after filtering for outliers
 
 ### Week 8-10 deliverables
-- [market_analysis.twbx](https://public.tableau.com/views/idx_market_analysis/Dashboard12?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
-- [competitive_analysis.twbx](https://public.tableau.com/views/idx_competitive_analysis/Dashboard3?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
-- [bayarea_market_analysis.twbx](https://public.tableau.com/views/idx_bayarea_market_analysis/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
-- [work in progress]()
+- [market_analysis.twbx](https://public.tableau.com/views/idx_market_analysis/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+- [competitive_analysis.twbx](https://public.tableau.com/views/idx_competitive_analysis/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+- [bayarea_housing_analysis.twbx](https://public.tableau.com/views/idx_bayarea_market_analysis/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ### Week 11-12 deliverables
-- WIP
+- market_intelligence_report.pdf (WIP)
