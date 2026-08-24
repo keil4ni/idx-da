@@ -16,7 +16,8 @@ def iqr(df, df_name):
     '''
     fields = ['ClosePrice',
               'LivingArea',
-              'DaysOnMarket']
+              'DaysOnMarket',
+              'close_to_original_list_ratio']
 
     print(f'{df_name.upper()} dataset:')
 
