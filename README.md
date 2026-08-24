@@ -40,4 +40,4 @@
 - [bayarea_housing_analysis.twbx](https://public.tableau.com/views/idx_bayarea_market_analysis/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ### Week 11-12 deliverables
-- market_intelligence_report.pdf (WIP)
+- [market_intelligence_report.pdf](https://docs.google.com/document/d/1yZAuuM-gXv4PTy8dVEwQ_HoXxBcPTAVZ_HLGmSZUbRc/edit?usp=sharing) (WIP)
