@@ -37,7 +37,7 @@
 ### Week 8-10 deliverables
 - [market_analysis.twbx](https://public.tableau.com/views/idx_market_analysis/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 - [competitive_analysis.twbx](https://public.tableau.com/views/idx_competitive_analysis/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
-- [bayarea_housing_analysis.twbx](https://public.tableau.com/views/idx_bayarea_market_analysis/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+- [bayarea_housing_analysis.twbx](https://public.tableau.com/views/idx_bayarea_market_analysis/OverallBayAreaDashboard?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ### Week 11-12 deliverables
 - [market_intelligence_report.pdf](https://docs.google.com/document/d/1yZAuuM-gXv4PTy8dVEwQ_HoXxBcPTAVZ_HLGmSZUbRc/edit?usp=sharing) (WIP)
