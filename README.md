@@ -41,3 +41,4 @@
 
 ### Week 11-12 deliverables
 - [market_intelligence_report.pdf](https://docs.google.com/document/d/1yZAuuM-gXv4PTy8dVEwQ_HoXxBcPTAVZ_HLGmSZUbRc/edit?usp=sharing) (WIP)
+- ``wk11_stats.ipynb`` (WIP) uses both sold and listing datasets that include flagged outliers (meaning they have not been removed) to provide an overall report of the city mentioned in the above market intelligence document
