@@ -35,10 +35,26 @@
 - ``wk7.md`` contains documentation of dataset shape and changes in median before and after filtering for outliers
 
 ### Week 8-10 deliverables
-- [market_analysis.twbx](https://public.tableau.com/views/idx_market_analysis/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
-- [competitive_analysis.twbx](https://public.tableau.com/views/idx_competitive_analysis/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
-- [bayarea_housing_analysis.twbx](https://public.tableau.com/views/idx_bayarea_market_analysis/OverallBayAreaDashboard?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+- [market_analysis.twbx](https://public.tableau.com/views/idx_market_analysis/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link) contains visualizations regarding:
+    - monthly median close prices
+    - average days on market
+    - average close-to-original list price ratio
+    - new listings
+    - closed sales
+- [competitive_analysis.twbx](https://public.tableau.com/views/idx_competitive_analysis/Story1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link) contains visualizations regarding:
+    - top 100 listing agents by sales volume and units
+    - top 100 listing offices by sales volume and units
+    - zipcode heatmap of median close prices
+    - zipcode heatmap of homes sold
+- [bayarea_housing_analysis.twbx](https://public.tableau.com/views/idx_bayarea_market_analysis/OverallBayAreaDashboard?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link) contains visualizations regarding:
+    - overall Bay Area
+        - median county close prices
+        - average county close prices versus living area
+    - East Bay Area cities
+        - average days on market
+        - median price per square feet
+        - median list prices per property subtype
 
 ### Week 11-12 deliverables
-- [market_intelligence_report.pdf](https://docs.google.com/document/d/1yZAuuM-gXv4PTy8dVEwQ_HoXxBcPTAVZ_HLGmSZUbRc/edit?usp=sharing) (WIP)
-- ``wk11_stats.ipynb`` (WIP) uses both sold and listing datasets that include flagged outliers (meaning they have not been removed) to provide an overall report of the city mentioned in the above market intelligence document
+- [market_intelligence_report.pdf](https://docs.google.com/document/d/1yZAuuM-gXv4PTy8dVEwQ_HoXxBcPTAVZ_HLGmSZUbRc/edit?usp=sharing)
+- ``wk11_stats.ipynb`` uses Python to look more accurately into both sold and listing datasets that include flagged outliers (meaning they have not been removed) to provide an overall market intelligence report for Milpitas
