@@ -57,4 +57,5 @@
 
 ### Week 11-12 deliverables
 - [market_intelligence_report.pdf](https://docs.google.com/document/d/1yZAuuM-gXv4PTy8dVEwQ_HoXxBcPTAVZ_HLGmSZUbRc/edit?usp=sharing)
-- ``wk11_stats.ipynb`` uses Python to look more accurately into both sold and listing datasets that include flagged outliers (meaning they have not been removed) to provide an overall market intelligence report for Milpitas
+- ``wk11.md`` summarizes statistic findings from clean and flagged sold/listing datasets for the above market intelligence report
+- ``idx_su_da_presentation.mp4`` (WIP)

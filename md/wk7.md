@@ -21,7 +21,7 @@ Percentage-wise,
 | DaysOnMarket                 |             2.68% |            -5.26% |
 | close_to_original_list_ratio |             3.05% |            -0.07% |
 
-**### LISTINGS dataset**
+### LISTINGS dataset
 <hr>
 
 | Variable                     | Dataset Size (Flagged) | Dataset Size (Removed) | Rows Removed | Median (Flagged) | Median (Removed) | Median Change |
