@@ -9,7 +9,7 @@ sold_shapes = []
 listing = []
 listing_shapes = []
 
-END_MONTH = 7
+END_MONTH = 8
 
 # get files from each month from years 2024-2026
 for year in [2024, 2025, 2026]:
@@ -25,10 +25,11 @@ for year in [2024, 2025, 2026]:
 
         # append filled csv if it exists, otherwise append the regular file
         if os.path.exists(filled_sold):
-            sold_df = pd.read_csv(filled_sold)
+            sold_df = pd.read_csv(filled_sold, low_memory = False)
             sold_df = sold_df.iloc[:, :-2] # drop last 2 cols of filled file
         elif os.path.exists(base_sold):
-            sold_df = pd.read_csv(base_sold)
+            # print('debugging\n', base_sold)
+            sold_df = pd.read_csv(base_sold, low_memory = False)
         else:
             continue
 
@@ -37,7 +38,7 @@ for year in [2024, 2025, 2026]:
         base_listing = f'./data/raw/CRMLSListing{year}{month:02d}.csv'
         # append csv if it exists, otherwise continue
         if os.path.exists(base_listing):
-            listing_df = pd.read_csv(base_listing)
+            listing_df = pd.read_csv(base_listing, low_memory = False)
         else:
             continue
             
@@ -54,7 +55,7 @@ print('Total sold row count before concat:', sum(sold_shapes))
 sold_df = pd.concat(sold)
 print('Total sold row count after concat (and before filtering):', sold_df.shape)
 # sold_df.head()
-# ROW COUNT: 666037 after getting june 2026 data
+# ROW COUNT: 714243 after getting aug 2026 data
 sold_df.to_csv('./data/processed/wk1_unfiltered_sold.csv', index = False) # save unfiltered sold csv for reference
 
 # filter property type by residential
@@ -62,7 +63,7 @@ filtered_sold = sold_df[sold_df['PropertyType'] == 'Residential']
 
 print('Total sold row count after filtering:', filtered_sold.shape)
 # filtered_sold.head()
-# ROW COUNT: 448253 
+# ROW COUNT: 480417 
 
 
 
@@ -71,7 +72,7 @@ print('Total listing row count before concat:', sum(listing_shapes))
 listing_df = pd.concat(listing)
 print('Total listing row count after concat (and before filtering):', listing_df.shape)
 # listing_df.head()
-# ROW COUNT: 955190 after getting june 2026 data
+# ROW COUNT: 1028120 after getting aug 2026 data
 listing_df.to_csv('./data/processed/wk1_unfiltered_listings.csv', index = False) # save unfiltered listing csv for reference
 
 # filter property type by residential
@@ -79,7 +80,7 @@ filtered_listing = listing_df[listing_df['PropertyType'] == 'Residential']
 
 print('Total listing row count after filtering:', filtered_listing.shape)
 # filtered_listing.head()
-# ROW COUNT: 607724
+# ROW COUNT: 654108
 
 
 

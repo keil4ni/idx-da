@@ -398,6 +398,14 @@ def clean_sold_rows(df):
     df = df.loc[~noncali_zips_mask]
     print('Shape after removing:', df.shape)
 
+    # drop 97381, 98245, 99228 zipcodes
+    print('\nShape before removing:', df.shape)
+    df = df[df['PostalCode'] != '99999']
+    df = df[df['PostalCode'] != '97381']
+    df = df[df['PostalCode'] != '98245']
+    df = df[df['PostalCode'] != '99228']
+    print('Shape after removal of invalid zipcodes (99999, 97381, 98245, 99228):', df.shape)
+
     # drop flagged columns that're done
     print('\nShape before removing flagged columns:', df.shape)
     df = df.drop(columns = ['neg_closeprice_flag',
@@ -599,10 +607,13 @@ def clean_listings_rows(df):
     # confirm changes were made
     df[df['oos_coords_flag'] == True][['Latitude', 'Longitude', 'City', 'PostalCode']].isna().sum()
 
-    # remove rows with 99999 postal code
+    # remove rows with 99999, 97381, 98245, 99228 postal code
     print('\nShape before removing:', df.shape)
     print('Shape of oos_cords_flag before removal:', df['oos_coords_flag'].shape)
     df = df[df['PostalCode'] != '99999']
+    df = df[df['PostalCode'] != '97381']
+    df = df[df['PostalCode'] != '98245']
+    df = df[df['PostalCode'] != '99228']
     print('Shape after removing:', df.shape)
     print('Shape of oos_cords_flag after removal:', df['oos_coords_flag'].shape)
 

@@ -12,25 +12,25 @@ Summary statistics of the following fields (if available):
 
 | variable          | count  | unique   | top                       | freq      |
 | ------------------| -----: | -------: | ------------------------: | --------: |
-| PropertySubType   | 464155 | 20       | SingleFamilyResidence     | 348347    |
-| CountyOrParish    | 465039 | 60       | Los Angeles               | 115475    |
-| MLSAreaMajor      | 402189 | 1091     | 699 - Not Defined         | 47718     |
-| ListOfficeName    | 465039 | 19410    | Compass                   | 32942     |
-| BuyerOfficeName   | 457713 | 22189    | Compass                   | 30834     |
+| PropertySubType   | 479223 | 20       | SingleFamilyResidence     | 359760    |
+| CountyOrParish    | 480134 | 60       | Los Angeles               | 119245    |
+| MLSAreaMajor      | 415078 | 1092     | 699 - Not Defined         | 48980     |
+| ListOfficeName    | 480134 | 19624    | Compass                   | 34009     |
+| BuyerOfficeName   | 472634 | 22452    | Compass                   | 31800     |
 
-> Final dataset shape: (465039, 55)
+> Final dataset shape: (480134, 55)
 
 ### ``LISTINGS`` SEGMENT ANALYSIS
 <hr>
 
 | variable          | count  | unique   | top                       | freq      |
 | ------------------| -----: | -------: | ------------------------: | --------: |
-| PropertySubType   | 629830 | 21       | SingleFamilyResidence     | 460366    |
-| CountyOrParish    | 631250 | 63       | Los Angeles               | 160877    |
-| MLSAreaMajor      | 545384 | 1116     | 699 - Not Defined         | 70282     |
-| ListOfficeName    | 631250 | 21763    | Compass                   | 45015     |
-| BuyerOfficeName   | 189227 | 14985    | Compass                   | 15216     |
+| PropertySubType   | 651860 | 21       | SingleFamilyResidence     | 476252    |
+| CountyOrParish    | 653323 | 63       | Los Angeles               | 166687    |
+| MLSAreaMajor      | 564385 | 1116     | 699 - Not Defined         | 72814     |
+| ListOfficeName    | 653323 | 22009    | Compass                   | 46576     |
+| BuyerOfficeName   | 191414 | 15045    | Compass                   | 15470     |
 
-> Final dataset shape: (631250, 46)
+> Final dataset shape: (653323, 46)
 
 Note: School columns were dropped from both datasets
